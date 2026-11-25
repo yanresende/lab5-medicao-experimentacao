@@ -24,7 +24,7 @@ O Sentinela é um sistema web e mobile (PWA e APK Android) usado em produção p
 
 | Critério | Evidência | Fonte |
 |---|---|---|
-| Real | Sistema com mais de 50 controllers e cerca de 100 entidades, em uso por usuários reais fora do grupo. | Repositório e produção |
+| Real | Sistema com mais de 50 controllers e cerca de 100 entidades, em uso por usuários reais fora do grupo. | Repositório do software (privado): https://github.com/yanresende/Site-Seguranca, e produção. O repositório é evidência de que o sistema existe, não o objeto de pesquisa. |
 | Em operação | Em produção hoje, com deploy contínuo: última migração de banco aplicada em 24/11/2026 20:17, com 77 migrações aplicadas no total. Primeiro commit em 21/02/2026 e primeiro registro de auditoria em 03/04/2026. | `flyway_schema_history` e `auditoria_logs` de produção (consulta em 24/11/2026), histórico do repositório. Último deploy em 25/11/2026 (informado pelo mantenedor) |
 | Alto impacto | 22 usuários cadastrados. Com escrita registrada: 8 usuários distintos nos últimos 7 dias, 11 nos últimos 30 dias e 12 no histórico. Média de 2,8 usuários distintos por dia (máximo 6) e de 26 operações por dia, em 28 dos últimos 30 dias. | `usuarios` e `auditoria_logs` de produção (consulta em 24/11/2026) |
 
@@ -98,7 +98,7 @@ Duas ressalvas: as 426 chamadas iguais indicam, provavelmente, que o motor de al
 
 **P2 (escala multi-tenant):** Quando o banco passa a ter 1, 2, 5, 10 e 50 empresas, o tempo das listagens de **uma** empresa se mantém? Qual configuração de índices acompanha melhor o crescimento: a de produção hoje, `(tenant_id, unidade_id, data DESC)` ou `(tenant_id, data DESC)`?
 
-**P3 (estudo de caso):** Um índice `(tenant_id, vistoria_id, data_visita)` em `vistoria_visitas` reduz o tempo da consulta de alertas de vistorias, e a partir de que volume?
+**P3 (estudo de caso):** Um índice `(tenant_id, vistoria_id, data_visita)` em `vistoria_visitas` reduz o tempo da consulta de alertas de vistorias, e a partir de que volume? E uma **reescrita da consulta**, que calcula a última visita uma vez por vistoria em vez de três subconsultas por linha, reduz mais do que o índice sozinho, ou os dois juntos?
 
 **Análises de apoio (sem hipótese própria):**
 - Efeito dos índices da V2 em si (`sem_indice` contra `v2`), o objetivo original do trabalho.
@@ -127,7 +127,7 @@ no contexto de um banco PostgreSQL multi-tenant que passa de 1 para até 50 empr
 |---|---|---|---|
 | P1: o plano e o tempo mudam com a estatística? | M1: tempo de execução (ms), por `EXPLAIN (ANALYZE, BUFFERS)`. M2: erro de estimativa = linhas reais ÷ linhas estimadas no primeiro nó de varredura. M3: tipo do nó principal (Seq Scan, Index Scan, Bitmap, Sort) | Direta, derivada (M2) e nominal (M3) | Razão e nominal |
 | P2: o tempo se mantém com mais empresas? | M1 por número de empresas. M4: razão entre M1 com N empresas e M1 com 1 empresa | Direta e derivada | Razão |
-| P3: o índice reduz a consulta de vistorias? | M1, M2 e M3 aplicadas a `vistorias_alertas` sem e com o índice | Direta | Razão e nominal |
+| P3: o índice, a reescrita ou os dois reduzem a consulta de vistorias? | M1, M2 e M3 aplicadas a `vistorias_alertas` (original) e `vistorias_alertas_reescrita`, sem e com o índice | Direta | Razão e nominal |
 | Calibração: a réplica reproduz a produção? | M5: tempo médio de produção (`pg_stat_statements`) contra M1 da réplica no volume real | Direta | Razão |
 
 Cuidado com armadilhas de medição (Goodhart): reportar mediana e p95 além da média, e olhar M2 e M3 para confirmar que a diferença vem do plano e não de cache.
@@ -140,6 +140,8 @@ Cuidado com armadilhas de medição (Goodhart): reportar mediana e p95 além da 
 - **H1 (P2):** o tempo cresce com o número de empresas na configuração `producao` com estatística ausente, e permanece estável nas configurações com `tenant_id` na frente e estatística atualizada.
 - **H0 (P3):** o tempo mediano de `vistorias_alertas` é igual com e sem o índice.
 - **H1 (P3):** o tempo é menor com o índice (unilateral), e a razão sem/com cresce com o volume.
+- **H0 (P3b):** a reescrita sem índice tem o mesmo tempo mediano que a consulta original com índice.
+- **H1 (P3b):** a reescrita sem índice é pelo menos tão rápida quanto a original com índice, porque lê as visitas uma vez só. A reescrita só entra como tratamento válido se devolver o **mesmo resultado** da original (conferido por `scripts/verificar_equivalencia.py`).
 
 ## 6. Planejamento do experimento
 
@@ -162,6 +164,7 @@ Consultas: `fichas_data_sem_foto` e `ocorrencias_unidade_data`, mais `fichas_nom
 | Fator | Níveis |
 |---|---|
 | Configuração de índices | `sem_indice` (produção hoje, só o índice simples de tenant em `vistoria_visitas`) e `com_indice` |
+| Versão da consulta | `original` (como está em produção) e `reescrita` (última visita calculada uma vez por vistoria, resultado equivalente) |
 | Tamanho | 350 vistorias × 1 empresa (volume real), 1.000 × 1, 8.000 × 1 e 8.000 × 5 empresas |
 | Modo de plano | `custom` e `generic` |
 
@@ -184,13 +187,22 @@ Sem índice, a consulta cresce de forma quase quadrática. Um tempo limite (`--t
 
 1. Matriz A: 10 execuções (5 números de empresas × 2 estados de estatística), cada uma com `gerar_dados.py` e `benchmark.py --estudo v2`.
 2. Matriz B: 4 execuções, com `benchmark.py --estudo vistorias --timeout-s 60`.
-3. Validar cada CSV (`validar.py`: sem vazios indevidos, sem duplicatas, desenho balanceado) e versionar.
-4. **Opcional, se sobrar tempo:** concorrência na réplica, repetindo as consultas reais com várias conexões simultâneas (`pgbench`). Fica fora do núcleo e, se não for feita, entra nas limitações.
+3. Antes da Matriz B, conferir que a reescrita é equivalente à consulta original (`verificar_equivalencia.py`). No teste com 8.010 vistorias, as três unidades deram resultados iguais.
+4. Validar cada CSV (`validar.py`: sem vazios indevidos, sem duplicatas, desenho balanceado) e versionar.
+5. Analisar com `analise/analisar.py` (seção 9).
+6. **Opcional, se sobrar tempo:** concorrência na réplica, repetindo as consultas reais com várias conexões simultâneas (`pgbench`). Fica fora do núcleo e, se não for feita, entra nas limitações.
 
-### 6.5 Calibração pendente
+### 6.5 Calibração da réplica
 
-- Largura da linha: 3,4 kB em produção contra linhas muito mais estreitas no gerador (explica parte de 7 ms em produção contra cerca de 1 ms na réplica).
+**Feito (25/11/2026):**
+- **Tamanho físico de `fichas`.** Em produção, 8.010 fichas ocupam 330 páginas de heap, cerca de 340 bytes por linha, e o resto da largura estimada de 3,4 kB fica fora da linha (TOAST). A réplica agora tem uma coluna larga fora da linha (`dados_extras`, 3.000 caracteres, sem compressão) e textos menores nas outras colunas. Resultado com 8.010 fichas: 320 páginas de heap (produção: 330) e cerca de 31 MB fora da linha. A coluna ocupa disco: 400 mil fichas (50 empresas) chegam a cerca de 1,2 GB, e o valor deve ser o mesmo em todas as execuções comparadas (`--largura-extra`).
+- **Proporção de fichas sem foto:** 25%, a partir de 1.841 fichas sem foto na unidade 1 no plano de produção. Página de 32 linhas.
+- **Limite do que se reproduz:** o `ANALYZE` ignora valores acima de 1 kB nas estatísticas, então a **largura que o planejador estima** (240 bytes na réplica, 3.420 em produção) não é reproduzível. Isso afeta só a estimativa de custo, não o tamanho físico nem o trabalho de leitura.
+- **Tempo absoluto:** a largura das linhas não explica a diferença entre 7 ms em produção e cerca de 1 ms na réplica no mesmo plano. A causa mais provável é o hardware compartilhado do servidor de produção. Por isso a comparação com produção é feita pelo **plano escolhido e pela razão entre condições**, não pelo tempo absoluto.
+
+**Pendente:**
 - Distribuição de `status1` e `em_rota` em `vistorias`, e visitas por vistoria (hoje assumidas).
+- Reproduzir os 491 ms de vistorias no volume real (351 vistorias). No teste com 8.010 vistorias a consulta original levou cerca de 420 ms, então no volume de produção deve ser muito menor, e a causa dos 491 ms em produção segue em aberto.
 
 ## 7. Classificação da pesquisa (as 7 categorias)
 
@@ -219,11 +231,11 @@ Esta é a primeira versão. Será revisada na Lab05S03.
 ## 9. Plano de análise
 
 1. **Descritiva:** média, mediana, desvio, p95 e boxplots por (consulta, condição, estatística, número de empresas).
-2. **P1:** diferença pareada `ausente` contra `atualizada` por Wilcoxon de postos sinalizados, com Hodges-Lehmann (diferença típica em ms) e correlação bisserial por postos. Distribuição de M2 (erro de estimativa) e frequência de cada tipo de plano (M3).
+2. **P1:** `ausente` contra `atualizada` por **Mann-Whitney U**, com delta de Cliff (tamanho do efeito) e estimador de Hodges-Lehmann (diferença típica em ms). Foi escolhido no lugar do Wilcoxon pareado porque as duas condições são execuções diferentes, medidas em momentos diferentes: as amostras são independentes e não formam pares casados. Distribuição de M2 (erro de estimativa) e frequência de cada tipo de plano (M3).
 3. **P2:** relação entre tempo e log do número de empresas (Spearman e inclinação de regressão), por configuração de índices e estado de estatística.
-4. **P3:** Wilcoxon pareado `sem_indice` contra `com_indice` e razão sem/com por tamanho.
+4. **P3:** Mann-Whitney U entre `sem_indice` e `com_indice`, e entre original e reescrita, com delta de Cliff e razão sem/com por tamanho. Medições censuradas por tempo limite ficam fora dos testes e são contadas à parte, com o limite inferior reportado.
 5. **Múltiplos testes:** correção de Holm dentro de cada pergunta.
-6. **Normalidade:** Shapiro-Wilk nas diferenças pareadas, para decidir entre teste t pareado e Wilcoxon.
+6. **Normalidade:** Shapiro-Wilk nas amostras, para confirmar que o teste não paramétrico é a escolha certa (tempos de consulta costumam ter cauda longa).
 7. **Dashboard:** razão por número de empresas, e plano escolhido por condição.
 
 ## 9.1 Conceitos da disciplina aplicados
@@ -253,7 +265,7 @@ Esta é a primeira versão. Será revisada na Lab05S03.
 | Lab01 | Coleta automatizada de dados: os scripts coletam as medições de forma automática e repetível, só que sobre um banco em vez de uma API. |
 | Lab02 | Desenho de experimento com tratamentos e repetições. |
 | Lab03 | Conceitos de operação (DORA): a frequência de migrações aplicadas serve de indicador (proxy) da frequência de mudança do sistema. Reaproveitamento pequeno, só como contexto. |
-| Lab04 | Escolha do teste de hipótese, simulação de erro tipo I e poder, dashboard. |
+| Lab04 | Escolha do teste de hipótese (aqui, Mann-Whitney por serem amostras independentes e de cauda longa), simulação de erro tipo I e poder, dashboard. |
 
 O que é novo: o objeto (software em operação, não repositório), o experimento controlado em banco de dados e o ângulo multi-tenant.
 
@@ -269,14 +281,14 @@ O que é novo: o objeto (software em operação, não repositório), o experimen
 - A produção foi consultada uma única vez, só para leitura de metadados, planos e contagens.
 - Segredos (`.env`, chaves do Firebase, `JWT_SECRET`, credenciais do banco) nunca entram neste repositório.
 
-## 14. Divisão da dupla (sugestão)
+## 14. Divisão da dupla
 
-O grupo é uma dupla, então os três papéis sugeridos no enunciado se combinam em dois. Qualquer integrante pode ser chamado a explicar qualquer parte.
+O grupo é uma dupla, então os três papéis sugeridos no enunciado se combinam em dois. Cada integrante é responsável por uma frente, mas **ambos acompanham e sabem explicar o estudo inteiro**, porque o professor pode pedir a qualquer um que explique qualquer parte.
 
-| Integrante | Papel | Responsável por |
-|---|---|---|
-| Yan Araújo | `<definir>` (sugestão: instrumentação, operação e validação) | Gerador de dados, benchmark, execução das matrizes, validação dos CSV. |
-| Felipe Vieira | `<definir>` (sugestão: planejamento, método, análise e impacto) | Critérios, 7 categorias, GQM, hipóteses, ameaças, estatística, tamanho de efeito, dashboard, estimativa de impacto. |
+| Integrante | Papel | Responsável por | Revisa |
+|---|---|---|---|
+| Yan Araújo | Instrumentação, operação e validação | Gerador de dados, benchmark, execução das matrizes A e B, validação e versionamento dos CSV, calibração da réplica com os dados de produção. | A análise estatística e as conclusões de impacto. |
+| Felipe Vieira | Planejamento, método, análise e impacto | Critérios do software, 7 categorias, GQM, hipóteses, ameaças à validade, análise estatística, tamanho de efeito, dashboard, estimativa de impacto, documento e apresentação. | Os scripts, o desenho do experimento e a coerência com a proposta. |
 
 ## 15. Cronograma
 
