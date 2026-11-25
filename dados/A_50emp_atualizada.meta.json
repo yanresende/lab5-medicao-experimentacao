@@ -1,0 +1,44 @@
+{
+  "inicio": "2026-11-25T14:39:49",
+  "postgres": "17.11",
+  "configuracao": {
+    "shared_buffers": "256MB",
+    "work_mem": "4MB",
+    "max_parallel_workers_per_gather": "2",
+    "random_page_cost": "4",
+    "effective_cache_size": "4GB",
+    "track_io_timing": "on"
+  },
+  "argumentos": {
+    "estudo": "v2",
+    "repeticoes": 30,
+    "aquecimento": 5,
+    "semente": 42,
+    "estatistica_tenant": "atualizada",
+    "timeout_s": 60.0,
+    "saida": "dados\\A_50emp_atualizada.csv"
+  },
+  "ordens": {
+    "v2": {
+      "condicoes": [
+        "tenant_unidade_data",
+        "v2",
+        "producao",
+        "tenant_data",
+        "sem_indice"
+      ],
+      "modos": [
+        "generic",
+        "custom"
+      ]
+    }
+  },
+  "linhas_por_tabela": {
+    "ocorrencias": 400000,
+    "fichas": 400000,
+    "vistorias": 400000,
+    "vistoria_visitas": 679469
+  },
+  "fim": "2026-11-25T14:40:41",
+  "duracao_s": 52.3
+}

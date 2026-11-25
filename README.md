@@ -73,6 +73,14 @@ Antes da Matriz B, confira que a consulta reescrita devolve o mesmo resultado da
 
 ### Coleta completa (Sprint 2)
 
+Para rodar tudo de uma vez, com retomada se for interrompido (cerca de 15 minutos):
+
+```powershell
+.\.venv\Scripts\python scripts/rodar_matrizes.py
+```
+
+O resultado e a análise estão em `analise/RESULTADOS_S02.md`. Os comandos individuais seguem abaixo.
+
 São duas matrizes (ver PROPOSTA.md, seção 6). Sempre com `--repeticoes 30`.
 
 **Matriz A (estatísticas e escala por empresas): 10 execuções.** Para cada número de empresas (1, 2, 5, 10 e 50) e cada estado de estatística (`atualizada` e `ausente`):

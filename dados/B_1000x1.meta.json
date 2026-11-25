@@ -1,0 +1,41 @@
+{
+  "inicio": "2026-11-25T14:40:50",
+  "postgres": "17.11",
+  "configuracao": {
+    "shared_buffers": "256MB",
+    "work_mem": "4MB",
+    "max_parallel_workers_per_gather": "2",
+    "random_page_cost": "4",
+    "effective_cache_size": "4GB",
+    "track_io_timing": "on"
+  },
+  "argumentos": {
+    "estudo": "vistorias",
+    "repeticoes": 30,
+    "aquecimento": 5,
+    "semente": 42,
+    "estatistica_tenant": "ausente",
+    "timeout_s": 60.0,
+    "saida": "dados\\B_1000x1.csv"
+  },
+  "ordens": {
+    "vistorias": {
+      "condicoes": [
+        "com_indice",
+        "sem_indice"
+      ],
+      "modos": [
+        "generic",
+        "custom"
+      ]
+    }
+  },
+  "linhas_por_tabela": {
+    "ocorrencias": 1000,
+    "fichas": 1000,
+    "vistorias": 1000,
+    "vistoria_visitas": 1671
+  },
+  "fim": "2026-11-25T14:41:02",
+  "duracao_s": 11.9
+}
