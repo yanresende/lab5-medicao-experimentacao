@@ -1,0 +1,54 @@
+{
+  "inicio": "2026-11-25T02:15:35",
+  "postgres": "17.11",
+  "configuracao": {
+    "shared_buffers": "256MB",
+    "work_mem": "4MB",
+    "max_parallel_workers_per_gather": "2",
+    "random_page_cost": "4",
+    "effective_cache_size": "4GB",
+    "track_io_timing": "on"
+  },
+  "argumentos": {
+    "estudo": "todos",
+    "repeticoes": 10,
+    "aquecimento": 3,
+    "semente": 42,
+    "estatistica_tenant": "atualizada",
+    "timeout_s": 60.0,
+    "saida": "dados\\piloto_atualizada.csv"
+  },
+  "ordens": {
+    "v2": {
+      "condicoes": [
+        "tenant_unidade_data",
+        "v2",
+        "producao",
+        "tenant_data",
+        "sem_indice"
+      ],
+      "modos": [
+        "generic",
+        "custom"
+      ]
+    },
+    "vistorias": {
+      "condicoes": [
+        "com_indice",
+        "sem_indice"
+      ],
+      "modos": [
+        "generic",
+        "custom"
+      ]
+    }
+  },
+  "linhas_por_tabela": {
+    "ocorrencias": 6000,
+    "fichas": 6000,
+    "vistorias": 6000,
+    "vistoria_visitas": 10179
+  },
+  "fim": "2026-11-25T02:15:54",
+  "duracao_s": 18.7
+}

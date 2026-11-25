@@ -1,0 +1,24 @@
+# PostgreSQL local para o experimento. Credenciais de laboratorio, sem relacao
+# com nenhum ambiente real.
+#
+# A versao deve ser a mesma da producao do Sentinela. Defina PG_VERSION
+# (ex.: PG_VERSION=16) depois de conferir a versao no painel do Railway.
+services:
+  db:
+    image: postgres:${PG_VERSION:-16}
+    container_name: lab5-pg
+    environment:
+      POSTGRES_USER: lab5
+      POSTGRES_PASSWORD: lab5
+      POSTGRES_DB: lab5
+    ports:
+      - "${LAB5_PGPORT:-5433}:5432"
+    # Configuracao fixa para todas as rodadas (registrada nos metadados do benchmark).
+    command:
+      - postgres
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - work_mem=4MB
+      - -c
+      - track_io_timing=on
