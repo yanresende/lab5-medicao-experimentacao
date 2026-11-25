@@ -29,7 +29,8 @@ import pandas as pd
 from scipy import stats
 
 SAIDA = Path(__file__).resolve().parent / "resultados"
-CHAVE = ["estudo", "consulta_id", "variante", "modo_plano", "empresas"]
+# `tamanho` (linhas por tabela) entra na chave porque a Matriz B tem tres bancos com 1 empresa.
+CHAVE = ["estudo", "consulta_id", "variante", "modo_plano", "empresas", "tamanho"]
 
 
 def holm(pvalores: list[float]) -> list[float]:
@@ -66,7 +67,7 @@ def carregar(caminhos: list[Path]) -> pd.DataFrame:
 
 def descritiva(df: pd.DataFrame) -> pd.DataFrame:
     ok = df[~df["censurada"]]
-    chaves = ["estudo", "consulta_id", "condicao", "modo_plano", "estatistica_tenant", "empresas"]
+    chaves = ["estudo", "consulta_id", "condicao", "modo_plano", "estatistica_tenant", "empresas", "tamanho"]
     g = ok.groupby(chaves)["tempo_exec_ms"]
     tabela = g.agg(n="count", mediana="median", media="mean", desvio="std",
                    p95=lambda s: s.quantile(0.95)).reset_index()
@@ -114,6 +115,44 @@ def indice_contra_sem(df: pd.DataFrame) -> pd.DataFrame:
     return tabela
 
 
+def p3_reescrita(df: pd.DataFrame) -> pd.DataFrame:
+    """Estudo de vistorias: consulta original contra a reescrita, com e sem indice."""
+    linhas = []
+    base = df[(~df["censurada"]) & (df["estudo"] == "vistorias")]
+    chaves = ["variante", "modo_plano", "empresas", "tamanho", "estatistica_tenant"]
+    comparacoes = [
+        ("original sem indice x reescrita sem indice", ("vistorias_alertas", "sem_indice"),
+         ("vistorias_alertas_reescrita", "sem_indice")),
+        ("original com indice x reescrita sem indice", ("vistorias_alertas", "com_indice"),
+         ("vistorias_alertas_reescrita", "sem_indice")),
+        ("original sem indice x original com indice", ("vistorias_alertas", "sem_indice"),
+         ("vistorias_alertas", "com_indice")),
+        ("reescrita sem indice x reescrita com indice", ("vistorias_alertas_reescrita", "sem_indice"),
+         ("vistorias_alertas_reescrita", "com_indice")),
+    ]
+    for chave, grupo in base.groupby(chaves):
+        for rotulo, (ca, cond_a), (cb, cond_b) in comparacoes:
+            a = grupo.loc[(grupo["consulta_id"] == ca) & (grupo["condicao"] == cond_a), "tempo_exec_ms"].to_numpy()
+            b = grupo.loc[(grupo["consulta_id"] == cb) & (grupo["condicao"] == cond_b), "tempo_exec_ms"].to_numpy()
+            r = comparar(a, b)
+            if r:
+                linhas.append({**dict(zip(chaves, chave)), "comparacao": rotulo, **r})
+    tabela = pd.DataFrame(linhas)
+    if not tabela.empty:
+        tabela["p_holm"] = holm(tabela["p_valor"].tolist())
+    return tabela
+
+
+def erro_estimativa(df: pd.DataFrame) -> pd.DataFrame:
+    """M2: linhas reais / linhas estimadas no primeiro no de varredura (1 = estimativa certa)."""
+    if "linhas_estimadas" not in df.columns:
+        return pd.DataFrame()
+    ok = df[(~df["censurada"]) & (df["linhas_estimadas"] > 0)].copy()
+    ok["erro"] = ok["linhas_reais_no_scan"] / ok["linhas_estimadas"]
+    chaves = ["estudo", "consulta_id", "condicao", "estatistica_tenant", "empresas", "tamanho"]
+    return ok.groupby(chaves)["erro"].agg(mediana="median", minimo="min", maximo="max").reset_index()
+
+
 def p2_escala(df: pd.DataFrame) -> pd.DataFrame:
     """Spearman entre numero de empresas e tempo, por consulta, condicao, modo e estatistica."""
     linhas = []
@@ -136,7 +175,7 @@ def planos(df: pd.DataFrame) -> pd.DataFrame:
     ok = df[~df["censurada"]].copy()
     ok["no_principal"] = ok["nos"].str.split(">").map(
         lambda ns: next((n for n in ns if "Scan" in n), ns[0]))
-    chaves = ["estudo", "consulta_id", "condicao", "estatistica_tenant"]
+    chaves = ["estudo", "consulta_id", "condicao", "estatistica_tenant", "empresas", "tamanho"]
     tabela = ok.groupby(chaves + ["no_principal"]).size().rename("medicoes").reset_index()
     tabela["percentual"] = 100 * tabela["medicoes"] / tabela.groupby(chaves)["medicoes"].transform("sum")
     return tabela
@@ -155,6 +194,8 @@ def main() -> int:
         "p1_estatistica": p1_estatistica(df),
         "indice_contra_sem": indice_contra_sem(df),
         "p2_escala": p2_escala(df),
+        "p3_reescrita": p3_reescrita(df),
+        "erro_estimativa": erro_estimativa(df),
         "planos": planos(df),
     }
     for nome, tabela in resultados.items():

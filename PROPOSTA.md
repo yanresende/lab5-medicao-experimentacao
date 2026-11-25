@@ -165,6 +165,7 @@ Consultas: `fichas_data_sem_foto` e `ocorrencias_unidade_data`, mais `fichas_nom
 |---|---|
 | Configuração de índices | `sem_indice` (produção hoje, só o índice simples de tenant em `vistoria_visitas`) e `com_indice` |
 | Versão da consulta | `original` (como está em produção) e `reescrita` (última visita calculada uma vez por vistoria, resultado equivalente) |
+| Estatística de `tenant_id` | `ausente`, como a produção hoje |
 | Tamanho | 350 vistorias × 1 empresa (volume real), 1.000 × 1, 8.000 × 1 e 8.000 × 5 empresas |
 | Modo de plano | `custom` e `generic` |
 

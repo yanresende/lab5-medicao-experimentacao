@@ -1,0 +1,222 @@
+estudo,consulta_id,condicao,estatistica_tenant,empresas,tamanho,no_principal,medicoes,percentual
+v2,fichas_data_sem_foto,producao,atualizada,1,8000,Bitmap Heap Scan,30,16.666666666666668
+v2,fichas_data_sem_foto,producao,atualizada,1,8000,Seq Scan,150,83.33333333333333
+v2,fichas_data_sem_foto,producao,atualizada,2,16000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,producao,atualizada,5,40000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,producao,atualizada,10,80000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,producao,atualizada,50,400000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,producao,ausente,1,8000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,producao,ausente,2,16000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,producao,ausente,5,40000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,producao,ausente,10,80000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,producao,ausente,50,400000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,sem_indice,atualizada,1,8000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,sem_indice,atualizada,2,16000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,sem_indice,atualizada,5,40000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,sem_indice,atualizada,10,80000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,sem_indice,atualizada,50,400000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,sem_indice,ausente,1,8000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,sem_indice,ausente,2,16000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,sem_indice,ausente,5,40000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,sem_indice,ausente,10,80000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,sem_indice,ausente,50,400000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_data,atualizada,1,8000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_data,atualizada,2,16000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_data,atualizada,5,40000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_data,atualizada,10,80000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_data,atualizada,50,400000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_data,ausente,1,8000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_data,ausente,2,16000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_data,ausente,5,40000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_data,ausente,10,80000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_data,ausente,50,400000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_unidade_data,atualizada,1,8000,Seq Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_unidade_data,atualizada,2,16000,Bitmap Heap Scan,60,33.333333333333336
+v2,fichas_data_sem_foto,tenant_unidade_data,atualizada,2,16000,Seq Scan,120,66.66666666666667
+v2,fichas_data_sem_foto,tenant_unidade_data,atualizada,5,40000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_unidade_data,atualizada,10,80000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_unidade_data,atualizada,50,400000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_unidade_data,ausente,1,8000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_unidade_data,ausente,2,16000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_unidade_data,ausente,5,40000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_unidade_data,ausente,10,80000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,tenant_unidade_data,ausente,50,400000,Bitmap Heap Scan,180,100.0
+v2,fichas_data_sem_foto,v2,atualizada,1,8000,Bitmap Heap Scan,30,16.666666666666668
+v2,fichas_data_sem_foto,v2,atualizada,1,8000,Seq Scan,150,83.33333333333333
+v2,fichas_data_sem_foto,v2,atualizada,2,16000,Bitmap Heap Scan,60,33.333333333333336
+v2,fichas_data_sem_foto,v2,atualizada,2,16000,Seq Scan,120,66.66666666666667
+v2,fichas_data_sem_foto,v2,atualizada,5,40000,Bitmap Heap Scan,60,33.333333333333336
+v2,fichas_data_sem_foto,v2,atualizada,5,40000,Seq Scan,120,66.66666666666667
+v2,fichas_data_sem_foto,v2,atualizada,10,80000,Bitmap Heap Scan,60,33.333333333333336
+v2,fichas_data_sem_foto,v2,atualizada,10,80000,Seq Scan,120,66.66666666666667
+v2,fichas_data_sem_foto,v2,atualizada,50,400000,Bitmap Heap Scan,60,33.333333333333336
+v2,fichas_data_sem_foto,v2,atualizada,50,400000,Seq Scan,120,66.66666666666667
+v2,fichas_data_sem_foto,v2,ausente,1,8000,Bitmap Heap Scan,30,16.666666666666668
+v2,fichas_data_sem_foto,v2,ausente,1,8000,Seq Scan,150,83.33333333333333
+v2,fichas_data_sem_foto,v2,ausente,2,16000,Bitmap Heap Scan,60,33.333333333333336
+v2,fichas_data_sem_foto,v2,ausente,2,16000,Seq Scan,120,66.66666666666667
+v2,fichas_data_sem_foto,v2,ausente,5,40000,Bitmap Heap Scan,60,33.333333333333336
+v2,fichas_data_sem_foto,v2,ausente,5,40000,Seq Scan,120,66.66666666666667
+v2,fichas_data_sem_foto,v2,ausente,10,80000,Bitmap Heap Scan,60,33.333333333333336
+v2,fichas_data_sem_foto,v2,ausente,10,80000,Seq Scan,120,66.66666666666667
+v2,fichas_data_sem_foto,v2,ausente,50,400000,Bitmap Heap Scan,60,33.333333333333336
+v2,fichas_data_sem_foto,v2,ausente,50,400000,Seq Scan,120,66.66666666666667
+v2,fichas_nome,producao,atualizada,1,8000,Seq Scan,360,100.0
+v2,fichas_nome,producao,atualizada,2,16000,Bitmap Heap Scan,300,83.33333333333333
+v2,fichas_nome,producao,atualizada,2,16000,Seq Scan,60,16.666666666666668
+v2,fichas_nome,producao,atualizada,5,40000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,producao,atualizada,10,80000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,producao,atualizada,50,400000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,producao,ausente,1,8000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,producao,ausente,2,16000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,producao,ausente,5,40000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,producao,ausente,10,80000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,producao,ausente,50,400000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,sem_indice,atualizada,1,8000,Seq Scan,360,100.0
+v2,fichas_nome,sem_indice,atualizada,2,16000,Seq Scan,360,100.0
+v2,fichas_nome,sem_indice,atualizada,5,40000,Seq Scan,360,100.0
+v2,fichas_nome,sem_indice,atualizada,10,80000,Seq Scan,360,100.0
+v2,fichas_nome,sem_indice,atualizada,50,400000,Seq Scan,360,100.0
+v2,fichas_nome,sem_indice,ausente,1,8000,Seq Scan,360,100.0
+v2,fichas_nome,sem_indice,ausente,2,16000,Seq Scan,360,100.0
+v2,fichas_nome,sem_indice,ausente,5,40000,Seq Scan,360,100.0
+v2,fichas_nome,sem_indice,ausente,10,80000,Seq Scan,360,100.0
+v2,fichas_nome,sem_indice,ausente,50,400000,Seq Scan,360,100.0
+v2,fichas_nome,tenant_data,atualizada,1,8000,Seq Scan,360,100.0
+v2,fichas_nome,tenant_data,atualizada,2,16000,Bitmap Heap Scan,180,50.0
+v2,fichas_nome,tenant_data,atualizada,2,16000,Seq Scan,180,50.0
+v2,fichas_nome,tenant_data,atualizada,5,40000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_data,atualizada,10,80000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_data,atualizada,50,400000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_data,ausente,1,8000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_data,ausente,2,16000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_data,ausente,5,40000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_data,ausente,10,80000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_data,ausente,50,400000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_unidade_data,atualizada,1,8000,Seq Scan,360,100.0
+v2,fichas_nome,tenant_unidade_data,atualizada,2,16000,Bitmap Heap Scan,120,33.333333333333336
+v2,fichas_nome,tenant_unidade_data,atualizada,2,16000,Seq Scan,240,66.66666666666667
+v2,fichas_nome,tenant_unidade_data,atualizada,5,40000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_unidade_data,atualizada,10,80000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_unidade_data,atualizada,50,400000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_unidade_data,ausente,1,8000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_unidade_data,ausente,2,16000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_unidade_data,ausente,5,40000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_unidade_data,ausente,10,80000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,tenant_unidade_data,ausente,50,400000,Bitmap Heap Scan,360,100.0
+v2,fichas_nome,v2,atualizada,1,8000,Seq Scan,360,100.0
+v2,fichas_nome,v2,atualizada,2,16000,Bitmap Heap Scan,120,33.333333333333336
+v2,fichas_nome,v2,atualizada,2,16000,Seq Scan,240,66.66666666666667
+v2,fichas_nome,v2,atualizada,5,40000,Bitmap Heap Scan,120,33.333333333333336
+v2,fichas_nome,v2,atualizada,5,40000,Seq Scan,240,66.66666666666667
+v2,fichas_nome,v2,atualizada,10,80000,Bitmap Heap Scan,120,33.333333333333336
+v2,fichas_nome,v2,atualizada,10,80000,Seq Scan,240,66.66666666666667
+v2,fichas_nome,v2,atualizada,50,400000,Bitmap Heap Scan,120,33.333333333333336
+v2,fichas_nome,v2,atualizada,50,400000,Seq Scan,240,66.66666666666667
+v2,fichas_nome,v2,ausente,1,8000,Seq Scan,360,100.0
+v2,fichas_nome,v2,ausente,2,16000,Bitmap Heap Scan,120,33.333333333333336
+v2,fichas_nome,v2,ausente,2,16000,Seq Scan,240,66.66666666666667
+v2,fichas_nome,v2,ausente,5,40000,Bitmap Heap Scan,120,33.333333333333336
+v2,fichas_nome,v2,ausente,5,40000,Seq Scan,240,66.66666666666667
+v2,fichas_nome,v2,ausente,10,80000,Bitmap Heap Scan,120,33.333333333333336
+v2,fichas_nome,v2,ausente,10,80000,Seq Scan,240,66.66666666666667
+v2,fichas_nome,v2,ausente,50,400000,Bitmap Heap Scan,120,33.333333333333336
+v2,fichas_nome,v2,ausente,50,400000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,producao,atualizada,1,8000,Index Scan,120,33.333333333333336
+v2,ocorrencias_unidade_data,producao,atualizada,1,8000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,producao,atualizada,2,16000,Bitmap Heap Scan,210,58.333333333333336
+v2,ocorrencias_unidade_data,producao,atualizada,2,16000,Index Scan,90,25.0
+v2,ocorrencias_unidade_data,producao,atualizada,2,16000,Seq Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,producao,atualizada,5,40000,Bitmap Heap Scan,300,83.33333333333333
+v2,ocorrencias_unidade_data,producao,atualizada,5,40000,Index Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,producao,atualizada,10,80000,Bitmap Heap Scan,330,91.66666666666667
+v2,ocorrencias_unidade_data,producao,atualizada,10,80000,Index Scan,30,8.333333333333334
+v2,ocorrencias_unidade_data,producao,atualizada,50,400000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,producao,ausente,1,8000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,producao,ausente,2,16000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,producao,ausente,5,40000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,producao,ausente,10,80000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,producao,ausente,50,400000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,sem_indice,atualizada,1,8000,Seq Scan,360,100.0
+v2,ocorrencias_unidade_data,sem_indice,atualizada,2,16000,Seq Scan,360,100.0
+v2,ocorrencias_unidade_data,sem_indice,atualizada,5,40000,Seq Scan,360,100.0
+v2,ocorrencias_unidade_data,sem_indice,atualizada,10,80000,Seq Scan,360,100.0
+v2,ocorrencias_unidade_data,sem_indice,atualizada,50,400000,Seq Scan,360,100.0
+v2,ocorrencias_unidade_data,sem_indice,ausente,1,8000,Seq Scan,360,100.0
+v2,ocorrencias_unidade_data,sem_indice,ausente,2,16000,Seq Scan,360,100.0
+v2,ocorrencias_unidade_data,sem_indice,ausente,5,40000,Seq Scan,360,100.0
+v2,ocorrencias_unidade_data,sem_indice,ausente,10,80000,Seq Scan,360,100.0
+v2,ocorrencias_unidade_data,sem_indice,ausente,50,400000,Seq Scan,360,100.0
+v2,ocorrencias_unidade_data,tenant_data,atualizada,1,8000,Index Scan,360,100.0
+v2,ocorrencias_unidade_data,tenant_data,atualizada,2,16000,Index Scan,360,100.0
+v2,ocorrencias_unidade_data,tenant_data,atualizada,5,40000,Bitmap Heap Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,tenant_data,atualizada,5,40000,Index Scan,300,83.33333333333333
+v2,ocorrencias_unidade_data,tenant_data,atualizada,10,80000,Bitmap Heap Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,tenant_data,atualizada,10,80000,Index Scan,300,83.33333333333333
+v2,ocorrencias_unidade_data,tenant_data,atualizada,50,400000,Bitmap Heap Scan,120,33.333333333333336
+v2,ocorrencias_unidade_data,tenant_data,atualizada,50,400000,Index Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,tenant_data,ausente,1,8000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,tenant_data,ausente,2,16000,Bitmap Heap Scan,330,91.66666666666667
+v2,ocorrencias_unidade_data,tenant_data,ausente,2,16000,Index Scan,30,8.333333333333334
+v2,ocorrencias_unidade_data,tenant_data,ausente,5,40000,Bitmap Heap Scan,330,91.66666666666667
+v2,ocorrencias_unidade_data,tenant_data,ausente,5,40000,Index Scan,30,8.333333333333334
+v2,ocorrencias_unidade_data,tenant_data,ausente,10,80000,Bitmap Heap Scan,330,91.66666666666667
+v2,ocorrencias_unidade_data,tenant_data,ausente,10,80000,Index Scan,30,8.333333333333334
+v2,ocorrencias_unidade_data,tenant_data,ausente,50,400000,Bitmap Heap Scan,300,83.33333333333333
+v2,ocorrencias_unidade_data,tenant_data,ausente,50,400000,Index Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,tenant_unidade_data,atualizada,1,8000,Index Scan,120,33.333333333333336
+v2,ocorrencias_unidade_data,tenant_unidade_data,atualizada,1,8000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,tenant_unidade_data,atualizada,2,16000,Index Scan,120,33.333333333333336
+v2,ocorrencias_unidade_data,tenant_unidade_data,atualizada,2,16000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,tenant_unidade_data,atualizada,5,40000,Bitmap Heap Scan,300,83.33333333333333
+v2,ocorrencias_unidade_data,tenant_unidade_data,atualizada,5,40000,Index Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,tenant_unidade_data,atualizada,10,80000,Bitmap Heap Scan,300,83.33333333333333
+v2,ocorrencias_unidade_data,tenant_unidade_data,atualizada,10,80000,Index Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,tenant_unidade_data,atualizada,50,400000,Bitmap Heap Scan,300,83.33333333333333
+v2,ocorrencias_unidade_data,tenant_unidade_data,atualizada,50,400000,Index Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,tenant_unidade_data,ausente,1,8000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,tenant_unidade_data,ausente,2,16000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,tenant_unidade_data,ausente,5,40000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,tenant_unidade_data,ausente,10,80000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,tenant_unidade_data,ausente,50,400000,Bitmap Heap Scan,360,100.0
+v2,ocorrencias_unidade_data,v2,atualizada,1,8000,Index Scan,120,33.333333333333336
+v2,ocorrencias_unidade_data,v2,atualizada,1,8000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,v2,atualizada,2,16000,Bitmap Heap Scan,30,8.333333333333334
+v2,ocorrencias_unidade_data,v2,atualizada,2,16000,Index Scan,90,25.0
+v2,ocorrencias_unidade_data,v2,atualizada,2,16000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,v2,atualizada,5,40000,Bitmap Heap Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,v2,atualizada,5,40000,Index Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,v2,atualizada,5,40000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,v2,atualizada,10,80000,Bitmap Heap Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,v2,atualizada,10,80000,Index Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,v2,atualizada,10,80000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,v2,atualizada,50,400000,Bitmap Heap Scan,90,25.0
+v2,ocorrencias_unidade_data,v2,atualizada,50,400000,Index Scan,30,8.333333333333334
+v2,ocorrencias_unidade_data,v2,atualizada,50,400000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,v2,ausente,1,8000,Bitmap Heap Scan,60,16.666666666666668
+v2,ocorrencias_unidade_data,v2,ausente,1,8000,Seq Scan,300,83.33333333333333
+v2,ocorrencias_unidade_data,v2,ausente,2,16000,Bitmap Heap Scan,120,33.333333333333336
+v2,ocorrencias_unidade_data,v2,ausente,2,16000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,v2,ausente,5,40000,Bitmap Heap Scan,120,33.333333333333336
+v2,ocorrencias_unidade_data,v2,ausente,5,40000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,v2,ausente,10,80000,Bitmap Heap Scan,120,33.333333333333336
+v2,ocorrencias_unidade_data,v2,ausente,10,80000,Seq Scan,240,66.66666666666667
+v2,ocorrencias_unidade_data,v2,ausente,50,400000,Bitmap Heap Scan,120,33.333333333333336
+v2,ocorrencias_unidade_data,v2,ausente,50,400000,Seq Scan,240,66.66666666666667
+vistorias,vistorias_alertas,com_indice,ausente,1,350,Seq Scan,180,100.0
+vistorias,vistorias_alertas,com_indice,ausente,1,1000,Seq Scan,180,100.0
+vistorias,vistorias_alertas,com_indice,ausente,1,8000,Seq Scan,180,100.0
+vistorias,vistorias_alertas,com_indice,ausente,5,40000,Seq Scan,180,100.0
+vistorias,vistorias_alertas,sem_indice,ausente,1,350,Seq Scan,180,100.0
+vistorias,vistorias_alertas,sem_indice,ausente,1,1000,Seq Scan,180,100.0
+vistorias,vistorias_alertas,sem_indice,ausente,1,8000,Seq Scan,180,100.0
+vistorias,vistorias_alertas,sem_indice,ausente,5,40000,Seq Scan,180,100.0
+vistorias,vistorias_alertas_reescrita,com_indice,ausente,1,350,Seq Scan,180,100.0
+vistorias,vistorias_alertas_reescrita,com_indice,ausente,1,1000,Seq Scan,180,100.0
+vistorias,vistorias_alertas_reescrita,com_indice,ausente,1,8000,Index Only Scan,30,16.666666666666668
+vistorias,vistorias_alertas_reescrita,com_indice,ausente,1,8000,Seq Scan,150,83.33333333333333
+vistorias,vistorias_alertas_reescrita,com_indice,ausente,5,40000,Seq Scan,180,100.0
+vistorias,vistorias_alertas_reescrita,sem_indice,ausente,1,350,Seq Scan,180,100.0
+vistorias,vistorias_alertas_reescrita,sem_indice,ausente,1,1000,Seq Scan,180,100.0
+vistorias,vistorias_alertas_reescrita,sem_indice,ausente,1,8000,Seq Scan,180,100.0
+vistorias,vistorias_alertas_reescrita,sem_indice,ausente,5,40000,Seq Scan,180,100.0
